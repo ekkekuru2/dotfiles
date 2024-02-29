@@ -36,3 +36,12 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+### alias
+alias l='ls -al --color=always'
+
+### bind key
+# Ctrl + 矢印キーで単語ごとに移動
+bindkey ";5C" forward-word
+bindkey ";5D" backward-word

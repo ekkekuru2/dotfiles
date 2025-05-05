@@ -31,7 +31,7 @@ fi
 
 # homeディレクトリ以下の内容を$HOMEにリンク
 # 存在する場合はmv .old
-cd 
+cd $DOT_DIR/home
 for f in *
 do
     if [ -e $HOME/$f ]; then

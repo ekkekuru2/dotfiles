@@ -41,6 +41,10 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 ### alias
 alias l='ls -al --color=always'
 
+### env variables
+export PATH="$PATH:/opt/nvim"
+
+
 ### bind key
 # Ctrl + 矢印キーで単語ごとに移動
 bindkey ";5C" forward-word

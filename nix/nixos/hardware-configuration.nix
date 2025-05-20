@@ -46,5 +46,5 @@
       vpl-gpu-rt
     ];
   };
-  hardware.system76.enableAll = true;
+  # hardware.system76.enableAll = true;
 }

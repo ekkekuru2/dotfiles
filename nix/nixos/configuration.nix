@@ -122,6 +122,7 @@
     kitty
     slack
     chromium
+    python3
   ];
 
   services.pcscd.enable = true;

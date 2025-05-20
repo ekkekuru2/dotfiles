@@ -83,6 +83,20 @@
     };
   };
 
+
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    plugins = with pkgs.vimPlugins; [
+    	lazy-nvim
+    ];
+    extraLuaConfig = ''
+    	require("lazy").setup()
+    '';
+  };
+
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {

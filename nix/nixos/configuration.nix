@@ -121,6 +121,7 @@
     gnupg
     kitty
     slack
+    chromium
   ];
 
   services.pcscd.enable = true;

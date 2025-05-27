@@ -100,7 +100,7 @@
   users.users.ekkekuru2 = {
     isNormalUser = true;
     description = "ekkekuru2";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" "kvm" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -109,6 +109,14 @@
 
   # Virtualisation
   virtualisation.docker.enable = true;
+
+
+  # virt-manager
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+  programs.virt-manager.enable = true;
+
+
 
   # Install firefox.
   programs.firefox = {

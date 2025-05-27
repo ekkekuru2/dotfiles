@@ -100,11 +100,15 @@
   users.users.ekkekuru2 = {
     isNormalUser = true;
     description = "ekkekuru2";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
     #  thunderbird
     ];
   };
+
+
+  # Virtualisation
+  virtualisation.docker.enable = true;
 
   # Install firefox.
   programs.firefox = {

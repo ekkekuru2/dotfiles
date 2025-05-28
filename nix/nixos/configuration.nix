@@ -116,6 +116,15 @@
   virtualisation.spiceUSBRedirection.enable = true;
   programs.virt-manager.enable = true;
 
+  # TPMソケットディレクトリのために dbus が必要
+  services.dbus.enable = true;
+
+  # virtlogd / swtpm が正しく動くように
+  virtualisation.libvirtd.qemu = {
+    runAsRoot = false;
+    swtpm.enable = true;
+  };
+
 
 
   # Install firefox.
@@ -135,6 +144,10 @@
     slack
     chromium
     python3
+    ## Virtual TPM
+    swtpm
+
+    freerdp
   ];
 
   services.pcscd.enable = true;

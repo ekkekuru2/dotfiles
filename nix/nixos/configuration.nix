@@ -25,6 +25,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes"];
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "slack"
+    "discord"
   ];
 
   # Configure network proxy if necessary
@@ -142,6 +143,7 @@
     gnupg
     kitty
     slack
+    discord
     chromium
     python3
     ## Virtual TPM

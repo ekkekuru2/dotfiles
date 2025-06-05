@@ -13,7 +13,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.11"; # Please read the comment before changing.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -35,7 +35,31 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     zotero
+    wolfram-engine
+    wolfram-notebook
   ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "wolfram-engine" "vscode"
+    ];
+
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+    #  ms-vscode.cpptools
+    ];
+    #++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    #  {
+    #    name = "wolfram-language-notebook";
+    #    publisher = "njpipeorgan";
+    #    version = "0.1.1";
+    #    sha256 = "sha256-VBv9SytaPdAsIMMhvQqSOpZqVpIJ+E9va2mrofV5JTs=";
+     # }
+    # ];
+  };
+
+
 
 
   i18n.inputMethod = {

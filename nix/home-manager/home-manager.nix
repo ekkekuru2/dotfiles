@@ -37,6 +37,7 @@
     zotero
     wolfram-engine
     wolfram-notebook
+    kicad
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

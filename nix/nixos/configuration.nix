@@ -159,6 +159,10 @@
     enableSSHSupport = true;
   };
 
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+
+
 
   services.power-profiles-daemon.enable = false;
   services.tlp = {

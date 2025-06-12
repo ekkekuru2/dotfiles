@@ -150,6 +150,8 @@
     swtpm
 
     freerdp
+
+    wireguard-tools
   ];
 
   services.pcscd.enable = true;
@@ -186,6 +188,15 @@
       };
   };
 
+
+
+  networking.firewall = {
+    allowedUDPPorts = [ 51820 ]; # Clients and peers can use the same port, see listenport
+  };
+  # Enable WireGuard
+  # networking.wg-quick.interfaces.wg0.configFile = "./files/wireguard/wg0.conf";
+  # ↑Won't work
+  # Place config file at /etc/wireguard/wg0.conf
 
 
   # Some programs need SUID wrappers, can be configured further or are

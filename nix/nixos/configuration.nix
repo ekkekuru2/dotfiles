@@ -152,6 +152,7 @@
     freerdp
 
     wireguard-tools
+    vlc
   ];
 
   services.pcscd.enable = true;

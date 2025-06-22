@@ -49,3 +49,6 @@ export PATH="$PATH:/opt/nvim"
 # Ctrl + 矢印キーで単語ごとに移動
 bindkey ";5C" forward-word
 bindkey ";5D" backward-word
+
+eval "$(direnv hook zsh)"
+

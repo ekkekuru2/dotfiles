@@ -105,6 +105,11 @@
     packages = with pkgs; [
     #  thunderbird
     ];
+    shell = pkgs.zsh;
+  };
+  programs.zsh.enable = true;
+  environment.sessionVariables = {
+    ZDOTDIR = "$HOME/.config/zsh";
   };
 
 

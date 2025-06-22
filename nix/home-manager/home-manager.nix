@@ -137,9 +137,6 @@
     plugins = with pkgs.vimPlugins; [
     	lazy-nvim
     ];
-    extraLuaConfig = ''
-    	require("lazy").setup()
-    '';
   };
 
 
@@ -152,6 +149,10 @@
     # ".screenrc".source = dotfiles/screenrc;
     ".config/zsh" = {
       source = ./home/.config/zsh;
+      recursive = true;
+    };
+    ".config/nvim" = {
+      source = ./home/.config/nvim;
       recursive = true;
     };
 

@@ -38,11 +38,12 @@
     wolfram-engine
     wolfram-notebook
     kicad
+    obsidian
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "wolfram-engine" "vscode"
+      "wolfram-engine" "vscode" "obsidian"
     ];
 
   programs.vscode = {

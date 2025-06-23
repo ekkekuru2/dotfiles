@@ -12,6 +12,7 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    xremap-flake.url = "github:xremap/nix-flake";
   };
 
   outputs = { self, nixpkgs, home-manager, winapps, ... }@ inputs:

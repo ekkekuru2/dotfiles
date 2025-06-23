@@ -2,13 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./fonts.nix
+      inputs.xremap-flake.nixosModules.default
     ];
 
   # Bootloader.
@@ -170,7 +171,13 @@
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
 
-
+  services.xremap = {
+    enable = true;
+    config.modmap = [{
+      name = "Global";
+      remap = { "CapsLock" = "Esc"; }; # globally remap CapsLock to Esc
+    }];
+  };
 
   services.power-profiles-daemon.enable = false;
   services.tlp = {

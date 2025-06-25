@@ -147,6 +147,10 @@
       source = ./home/.config/nvim;
       recursive = true;
     };
+    ".WolframEngine" = {
+      source = ./home/.WolframEngine;
+      recursive = true;
+    };
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''

@@ -40,6 +40,8 @@
     kicad
     obsidian
     zoom-us
+    inkscape-with-extensions
+    obs-studio
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

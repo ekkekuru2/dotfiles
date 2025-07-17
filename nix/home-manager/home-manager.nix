@@ -42,6 +42,7 @@
     zoom-us
     inkscape-with-extensions
     obs-studio
+    ardour
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

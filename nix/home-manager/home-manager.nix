@@ -43,6 +43,7 @@
     inkscape-with-extensions
     obs-studio
     ardour
+    mixxx
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

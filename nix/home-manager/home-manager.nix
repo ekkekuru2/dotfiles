@@ -44,11 +44,12 @@
     obs-studio
     ardour
     mixxx
+    spotify
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "wolfram-engine" "vscode" "obsidian" "zoom"
+      "wolfram-engine" "vscode" "obsidian" "zoom" "spotify"
     ];
 
   programs.vscode = {

@@ -45,6 +45,10 @@
     ardour
     mixxx
     spotify
+    qpwgraph
+    raysession
+    audacity
+    lsp-plugins
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

@@ -49,6 +49,7 @@
     raysession
     audacity
     lsp-plugins
+    sfizz
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

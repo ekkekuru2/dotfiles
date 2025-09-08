@@ -208,7 +208,10 @@
       };
   };
 
-
+  networking.extraHosts =
+    ''
+      0.0.0.0 apresolve.spotify.com
+    '';
 
   networking.firewall = {
     allowedUDPPorts = [ 51820 ]; # Clients and peers can use the same port, see listenport

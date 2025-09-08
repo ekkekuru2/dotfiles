@@ -51,6 +51,7 @@
     lsp-plugins
     sfizz
     davinci-resolve
+    thunderbird
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

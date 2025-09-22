@@ -208,6 +208,10 @@
       };
   };
 
+
+  # Tailscale
+  services.tailscale.enable = true;
+
   networking.extraHosts =
     ''
       0.0.0.0 apresolve.spotify.com

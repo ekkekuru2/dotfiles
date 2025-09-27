@@ -102,7 +102,7 @@
   users.users.ekkekuru2 = {
     isNormalUser = true;
     description = "ekkekuru2";
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" "kvm" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" "kvm" "dialout"];
     packages = with pkgs; [
     #  thunderbird
     ];

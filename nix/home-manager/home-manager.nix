@@ -52,6 +52,7 @@
     sfizz
     davinci-resolve
     thunderbird
+    jtdx
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

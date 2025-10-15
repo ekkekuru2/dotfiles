@@ -53,6 +53,10 @@
     davinci-resolve
     thunderbird
     jtdx
+    # Network Tools
+    whois
+    traceroute
+    dig
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

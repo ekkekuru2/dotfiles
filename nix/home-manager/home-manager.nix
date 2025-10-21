@@ -53,6 +53,7 @@
     davinci-resolve
     thunderbird
     jtdx
+    zed-editor
     # Network Tools
     whois
     traceroute

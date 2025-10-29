@@ -58,6 +58,7 @@
     whois
     traceroute
     dig
+    virt-viewer
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

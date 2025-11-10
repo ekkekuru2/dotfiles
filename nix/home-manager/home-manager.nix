@@ -54,6 +54,7 @@
     thunderbird
     jtdx
     zed-editor
+    unzip
     # Network Tools
     whois
     traceroute

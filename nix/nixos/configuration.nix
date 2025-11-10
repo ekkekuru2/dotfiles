@@ -95,6 +95,13 @@
     #media-session.enable = true;
   };
 
+  hardware.graphics.enable = true;
+  hardware.graphics.extraPackages = with pkgs; [
+    mesa
+    virglrenderer
+  ];
+
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 

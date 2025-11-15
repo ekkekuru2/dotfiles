@@ -56,6 +56,7 @@
     zed-editor
     unzip
     p7zip
+    hydrogen
     # Network Tools
     whois
     traceroute

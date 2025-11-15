@@ -55,6 +55,7 @@
     jtdx
     zed-editor
     unzip
+    p7zip
     # Network Tools
     whois
     traceroute

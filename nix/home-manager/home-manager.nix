@@ -58,6 +58,7 @@
     p7zip
     hydrogen
     fzf
+    zoxide
     # Network Tools
     whois
     traceroute

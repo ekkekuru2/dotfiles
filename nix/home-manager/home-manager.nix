@@ -57,6 +57,7 @@
     unzip
     p7zip
     hydrogen
+    fzf
     # Network Tools
     whois
     traceroute

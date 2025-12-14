@@ -1,3 +1,8 @@
+HISTFILE=${ZDOTDIR}/.zsh_history
+HISTSIZE=1000000
+SAVEHIST=1000000
+
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -33,9 +38,16 @@ zinit light-mode for \
 ### Zsh Plugin----
 zinit light zsh-users/zsh-syntax-highlighting
 zinit ice depth=1; zinit light romkatv/powerlevel10k
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+
+# tab completions using fzf
+zinit light Aloxaf/fzf-tab
+# fzf key bind (Ctrl-R history search etc..)
+[ -f ${ZDOTDIR}/fzf.zsh ] && source ${ZDOTDIR}/fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ${ZDOTDIR}/.p10k.zsh ]] || source ${ZDOTDIR}/.p10k.zsh
 
 
 ### alias

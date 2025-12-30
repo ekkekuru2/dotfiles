@@ -230,6 +230,10 @@
   networking.firewall = {
     allowedUDPPorts = [ 51820 ]; # Clients and peers can use the same port, see listenport
   };
+  networking.firewall = rec {
+    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];
+  };
   # Enable WireGuard
   # networking.wg-quick.interfaces.wg0.configFile = "./files/wireguard/wg0.conf";
   # ↑Won't work

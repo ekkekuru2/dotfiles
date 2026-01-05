@@ -34,7 +34,12 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-openconnect
+    ];
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Tokyo";
@@ -169,6 +174,7 @@
 
     wireguard-tools
     vlc
+    openconnect
   ];
 
   services.pcscd.enable = true;

@@ -18,7 +18,19 @@
   outputs = { self, nixpkgs, home-manager, winapps, ... }@ inputs:
   let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    overlays = [
+      (final: prev: {
+        ltspice = prev.ltspice.overrideAttrs (old: {
+          src = prev.fetchurl {
+            url = old.src.url;
+            hash = "sha256-7DUCZpftMtKuV7F746PIh3tjH2QrZjJkkamAjEfsAIE=";
+          };
+        });
+      })
+    ];
+    pkgs = import nixpkgs {
+      inherit overlays system;
+    };
     sources = pkgs.callPackage ./nix/_sources/generated.nix {};
   in {
     nixosConfigurations.lemp13 = nixpkgs.lib.nixosSystem {

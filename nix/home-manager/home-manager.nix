@@ -59,6 +59,7 @@
     hydrogen
     fzf
     zoxide
+    ltspice
     # Network Tools
     whois
     traceroute
@@ -68,7 +69,7 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "wolfram-engine" "vscode" "obsidian" "zoom" "spotify" "davinci-resolve"
+      "wolfram-engine" "vscode" "obsidian" "zoom" "spotify" "davinci-resolve" "ltspice"
     ];
 
   programs.vscode = {

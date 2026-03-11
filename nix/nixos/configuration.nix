@@ -23,6 +23,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
 
+  nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes"];
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "slack"

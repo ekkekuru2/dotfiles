@@ -50,6 +50,7 @@
     audacity
     lsp-plugins
     sfizz
+    reaper
     davinci-resolve
     thunderbird
     jtdx
@@ -69,7 +70,7 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "wolfram-engine" "vscode" "obsidian" "zoom" "spotify" "davinci-resolve" "ltspice"
+      "wolfram-engine" "vscode" "obsidian" "zoom" "spotify" "davinci-resolve" "ltspice" "reaper"
     ];
 
   programs.vscode = {

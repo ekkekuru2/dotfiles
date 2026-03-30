@@ -79,7 +79,7 @@
 
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
     #  ms-vscode.cpptools
     ];
     #++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
@@ -145,9 +145,11 @@
 
   programs.git = {
     enable = true;
-    userName = "ekkekuru2";
-    userEmail = "ekke@ekke.jp";
-    extraConfig = {
+    settings= {
+      user = {
+        name = "ekkekuru2";
+        email = "ekke@ekke.jp";
+      };
       init = {defaultBranch = "main";};
       commit = {gpgsign = "true";};
       user = {signingKey = "BED215D4423E036A";};

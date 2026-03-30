@@ -64,7 +64,7 @@
     gimp
     musescore
     darktable
-    kdenlive
+    kdePackages.kdenlive
     # Network Tools
     whois
     traceroute

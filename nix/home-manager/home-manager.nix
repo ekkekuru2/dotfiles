@@ -61,6 +61,10 @@
     fzf
     zoxide
     ltspice
+    gimp
+    musescore
+    darktable
+    kdenlive
     # Network Tools
     whois
     traceroute

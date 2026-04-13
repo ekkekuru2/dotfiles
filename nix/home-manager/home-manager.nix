@@ -142,6 +142,16 @@
     };
   };
 
+  programs.gnome-shell = {
+    enable = true;
+    extensions = [
+      { package = pkgs.gnomeExtensions.dash-to-dock; }
+      { package = pkgs.gnomeExtensions.appindicator; }
+      { package = pkgs.gnomeExtensions.kimpanel; }
+      { package = pkgs.gnomeExtensions.gsconnect; }
+    ];
+  };
+
 
   programs.git = {
     enable = true;

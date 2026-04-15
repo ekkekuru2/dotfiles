@@ -19,7 +19,7 @@
       "$mainMod, Escape, exec, hyprctl reload"
       "$mainMod, Return, exec, $term"
       "$mainMod, Space, exec, hyprlauncher"
-      "$mainMod SHIFT, Q, killactive"
+      "$mainMod , Q, killactive"
       "$mainMod SHIFT, E, exec, wlogout"
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, togglefloating"

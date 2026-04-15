@@ -3,6 +3,11 @@
   wayland.windowManager.hyprland.extraConfig = "
     monitor=,preferred,auto,1
     exec-once = hyprpanel
+    input {
+        touchpad {
+            natural_scroll = true
+          }
+      }
   ";
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";

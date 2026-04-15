@@ -1,6 +1,10 @@
 { config, pkgs, lib, sources, ... }:
 
 {
+  imports = [
+    ./hyprland.nix
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ekkekuru2";
@@ -70,6 +74,10 @@
     traceroute
     dig
     virt-viewer
+    # hypr
+    hyprlauncher
+    nautilus
+    hyprpanel
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -134,23 +142,26 @@
 
 
 
+  wayland.windowManager.hyprland.enable = true; # enable Hyprland
+  # Optional, hint Electron apps to use Wayland:
+  home.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  dconf.settings = {
-    "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
-    };
-  };
+  # dconf.settings = {
+  #   "org/virt-manager/virt-manager/connections" = {
+  #     autoconnect = ["qemu:///system"];
+  #     uris = ["qemu:///system"];
+  #   };
+  # };
 
-  programs.gnome-shell = {
-    enable = true;
-    extensions = [
-      { package = pkgs.gnomeExtensions.dash-to-dock; }
-      { package = pkgs.gnomeExtensions.appindicator; }
-      { package = pkgs.gnomeExtensions.kimpanel; }
-      { package = pkgs.gnomeExtensions.gsconnect; }
-    ];
-  };
+  # programs.gnome-shell = {
+  #  enable = true;
+  #  extensions = [
+  #    { package = pkgs.gnomeExtensions.dash-to-dock; }
+  #    { package = pkgs.gnomeExtensions.appindicator; }
+  #    { package = pkgs.gnomeExtensions.kimpanel; }
+  #    { package = pkgs.gnomeExtensions.gsconnect; }
+  #  ];
+  #};
 
 
   programs.git = {

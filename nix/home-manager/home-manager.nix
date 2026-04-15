@@ -78,6 +78,7 @@
     hyprlauncher
     nautilus
     hyprpanel
+    nwg-displays # GUIでディスプレイ配置変えるやつ
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

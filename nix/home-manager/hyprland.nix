@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   wayland.windowManager.hyprland.extraConfig = "
-    monitor=,preferred,auto,1
+     source = ~/.config/hypr/monitors.conf
     exec-once = hyprpanel
     input {
         touchpad {

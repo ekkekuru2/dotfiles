@@ -1,1 +1,1 @@
-nixos-rebuild switch --flake '.#lemp13' --use-remote-sudo
+nixos-rebuild switch --flake '.#lemp13' --sudo

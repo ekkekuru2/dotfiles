@@ -74,7 +74,7 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "wolfram-engine" "vscode" "obsidian" "zoom" "spotify" "davinci-resolve" "ltspice" "reaper"
+      "wolfram-engine" "vscode" "obsidian" "zoom" "spotify" "davinci-resolve" "ltspice" "reaper" "WolframEngine_14.1.0_LIN.sh"
     ];
 
   programs.vscode = {

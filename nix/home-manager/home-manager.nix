@@ -191,15 +191,15 @@
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     ".config/zsh" = {
-      source = ./home/.config/zsh;
+      source = ../../home/.config/zsh;
       recursive = true;
     };
     ".config/nvim" = {
-      source = ./home/.config/nvim;
+      source = ../../home/.config/nvim;
       recursive = true;
     };
     ".WolframEngine" = {
-      source = ./home/.WolframEngine;
+      source = ../../home/.WolframEngine;
       recursive = true;
     };
 

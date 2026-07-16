@@ -1,3 +1,10 @@
+# lazy.nvim itself
+.lazy/
+
+# installed plugins
+lazy-plugins/
+
+# misc
 tt.*
 .tests
 doc/tags
@@ -5,4 +12,3 @@ debug
 .repro
 foo.*
 *.log
-data

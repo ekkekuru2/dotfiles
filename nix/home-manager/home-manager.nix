@@ -70,6 +70,14 @@
     traceroute
     dig
     virt-viewer
+    pkgs.pyright
+    # Neovim LSP
+    clang-tools          # clangd 含む
+    typescript-language-server
+    typescript
+    nil                  # Nix LSP
+    lua-language-server
+    ripgrep
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

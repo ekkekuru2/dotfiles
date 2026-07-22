@@ -65,6 +65,7 @@
     musescore
     darktable
     kdePackages.kdenlive
+    jq
     # Network Tools
     whois
     traceroute

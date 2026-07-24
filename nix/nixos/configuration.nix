@@ -30,6 +30,32 @@
     "discord"
   ];
 
+  # 20260724 mutter 50.2 は Wayland のカーソル/入力フォーカス処理
+  # (update_cursor_location -> clutter_input_focus_is_focused) で SIGSEGV する。
+  # Wayland ではコンポジタが死ぬと配下の全ウィンドウが道連れになるため、
+  # サスペンド/ロック復帰時にブラウザ等が強制終了される。
+  # 50.3 でこの経路のクラッシュ修正 (!5097/!5107/!5143/!5151/!5153,
+  # "Only schedule a single cursor location update", NULL cursor renderer 対応等)
+  # が入っているが nixpkgs はまだ 50.2 のため overlay で 50.3 に上げる。
+  # nixpkgs が 50.3+ に追いついたらこの overlay は削除してよい。
+  nixpkgs.overlays = [
+    (final: prev: {
+      mutter = prev.mutter.overrideAttrs (old: rec {
+        version = "50.3";
+        src = final.fetchurl {
+          url = "mirror://gnome/sources/mutter/50/mutter-${version}.tar.xz";
+          hash = "sha256-JWY/p6/JakwJJEiZDA2mZLfwTdjZ9eO5vitJixswPLQ=";
+        };
+        # nixpkgs が 50.2 にバックポートしていた
+        # "wayland: Only schedule a single cursor location update"
+        # (f1570318e) は 50.3 に本体取り込み済みのため衝突する。除去する。
+        patches = builtins.filter
+          (p: !(final.lib.hasInfix "f1570318ec3e9a38615eb91708bb71628ab8bcfd" (toString p)))
+          (old.patches or []);
+      });
+    })
+  ];
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";

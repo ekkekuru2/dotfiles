@@ -56,6 +56,7 @@ eval "$(zoxide init zsh)"
 ### alias
 alias l='ls -al --color=always'
 alias claude-dub='CLAUDE_CONFIG_DIR=~/.config/claude-dubguild claude'
+alias ssh='kitten ssh'
 
 ### env variables
 export PATH="$PATH:/opt/nvim"

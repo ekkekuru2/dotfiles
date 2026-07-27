@@ -11,6 +11,7 @@ return {
       "python",
       "typescript", "tsx", "javascript",
       "nix",
+      "prisma",
       -- Neovim 設定用
       "lua", "vim", "vimdoc", "query",
       -- その他よく使う

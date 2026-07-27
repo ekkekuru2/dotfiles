@@ -78,6 +78,7 @@
     typescript
     nil                  # Nix LSP
     lua-language-server
+    prisma-language-server  # Prisma LSP (prismals)
     ripgrep
   ];
 

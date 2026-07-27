@@ -94,6 +94,23 @@ vim.lsp.config("nil_ls", {
 })
 vim.lsp.enable("nil_ls")
 
+-- Prisma (schema.prisma)
+-- Install: nix: pkgs.prisma-language-server
+-- Neovim コアは .prisma を認識しないのでファイルタイプを登録しておく
+vim.filetype.add({ extension = { prisma = "prisma" } })
+vim.lsp.config("prismals", {
+  cmd = { "prisma-language-server", "--stdio" },
+  filetypes = { "prisma" },
+  root_markers = { "schema.prisma", ".git" },
+  -- prisma-language-server は VSCode 前提で、workspace/configuration に
+  -- 設定が返らないと validateTextDocument で settings が null になり
+  -- "Cannot read properties of null (reading 'enableDiagnostics')" で
+  -- クラッシュする（init はするが didOpen 直後に落ちて補完が出ない）。
+  -- 非 null の settings を渡してクラッシュを防ぐ。
+  settings = { prisma = { enableDiagnostics = true } },
+})
+vim.lsp.enable("prismals")
+
 -- Lua (for editing Neovim config)
 -- Install: nix: pkgs.lua-language-server  /  brew: lua-language-server
 vim.lsp.config("lua_ls", {

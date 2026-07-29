@@ -55,14 +55,24 @@
 
       ];
     };
-    homeConfigurations."ekkekuru2" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {
-        inherit inputs sources;
+    homeConfigurations =
+      let
+        makeHomeConfig =
+          {
+            modules ? [ ],
+          }:
+          inputs.home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit inputs sources;
+            };
+            modules = modules;
+          };
+      in
+      {
+        ekkekuru2 = makeHomeConfig { modules = [ ./nix/home-manager/desktop.nix ]; };
+        /* desktop-min = makeHomeConfig { modules = [ ./nix/home-manager/desktop-min.nix ]; }; */
+        headless = makeHomeConfig { modules = [ ./nix/home-manager/base.nix ];};
       };
-      modules = [
-        ./nix/home-manager/home-manager.nix
-      ];
-    };
   };
 }

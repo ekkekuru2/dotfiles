@@ -1,10 +1,27 @@
 { config, pkgs, lib, sources, ... }:
 
+let
+  # headless は「接続先で割り当てられたユーザー」で使う想定なので、
+  # username / homeDirectory を実行時の環境変数から取る。
+  # スパコンや VM ではユーザー名を選べず、home も /home 以外
+  # (/work/<user> 等) に置かれることがあるため、$HOME をそのまま尊重する。
+  #
+  # これは Nix の純粋評価から外れる「外部入力」なので、flake の pure eval
+  # では getEnv が "" を返す。必ず --impure を付けて実行すること:
+  #   home-manager switch --flake .#headless --impure
+  # 付け忘れると "" のまま壊れた設定になるので throw で弾く。
+  envUser = builtins.getEnv "USER";
+  envHome = builtins.getEnv "HOME";
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  # home.username = "ekkekuru2";
-  # home.homeDirectory = "/home/ekkekuru2";
+  home.username =
+    if envUser != "" then envUser
+    else throw "base.nix: $USER が空です。home-manager を --impure で実行してください";
+  home.homeDirectory =
+    if envHome != "" then envHome
+    else "/home/${envUser}";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

@@ -38,7 +38,6 @@
     p7zip
     fzf
     zoxide
-    ltspice
     jq
     # Network Tools
     whois

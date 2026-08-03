@@ -207,8 +207,8 @@
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-curses;
-    # pinentryPackage = pkgs.pinentry-gnome3; # enableExtraSocketがpinetry-cursesだと上手く動かなかったがgnomeにしたら上手くいった
+    # pinentryPackage = pkgs.pinentry-curses;
+    pinentryPackage = pkgs.pinentry-gnome3; # enableExtraSocketがpinetry-cursesだと上手く動かなかったがgnomeにしたら上手くいった
     enableSSHSupport = true;
     enableExtraSocket = true;
   };

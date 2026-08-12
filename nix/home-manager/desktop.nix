@@ -80,6 +80,8 @@
     lua-language-server
     prisma-language-server  # Prisma LSP (prismals)
     ripgrep
+    gcc                  # nvim-treesitter(main) がパーサをソースからビルドするのに必要な cc
+    tree-sitter          # nvim-treesitter(main) は tree-sitter build で各パーサをビルドする
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:

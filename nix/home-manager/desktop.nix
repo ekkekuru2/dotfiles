@@ -66,6 +66,7 @@
     darktable
     kdePackages.kdenlive
     jq
+    friture
     # Network Tools
     whois
     traceroute

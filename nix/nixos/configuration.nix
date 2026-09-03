@@ -28,6 +28,7 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "slack"
     "discord"
+    "discord-unwrapped"
   ];
 
   # 20260724 mutter 50.2 は Wayland のカーソル/入力フォーカス処理

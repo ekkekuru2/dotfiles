@@ -23,7 +23,7 @@
         ltspice = prev.ltspice.overrideAttrs (old: {
           src = prev.fetchurl {
             url = old.src.url;
-            hash = "sha256-7DUCZpftMtKuV7F746PIh3tjH2QrZjJkkamAjEfsAIE=";
+            hash = "sha256-SF2r0tfYKT3nM6OZcZ9lOO/aSlS0ixgaFOBycRhphNM=";
           };
         });
       })

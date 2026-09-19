@@ -1,39 +1,16 @@
 { config, pkgs, lib, sources, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "ekkekuru2";
-  home.homeDirectory = "/home/ekkekuru2";
+  imports = [ ./base.nix ];
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "26.05"; # Please read the comment before changing.
+  # username / homeDirectory は base.nix の $USER/$HOME 動的解決に任せる
+  # (デスクトップも常に ekkekuru2 で --impure 実行するので同じ結果になる)
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
+  # base.nix の home.packages と自動でマージされるので、ここには
+  # デスクトップ環境固有のパッケージだけを書く。
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
     zotero
     wolfram-engine
     wolfram-notebook
@@ -55,38 +32,14 @@
     thunderbird
     jtdx
     zed-editor
-    unzip
-    p7zip
     hydrogen
-    fzf
-    zoxide
     ltspice
     gimp
     musescore
     darktable
     kdePackages.kdenlive
-    jq
     friture
-    # Network Tools
-    whois
-    traceroute
-    dig
     virt-viewer
-    pkgs.pyright
-    # Neovim LSP
-    clang-tools          # clangd 含む
-    typescript-language-server
-    typescript
-    nil                  # Nix LSP
-    lua-language-server
-    prisma-language-server  # Prisma LSP (prismals)
-    rust-analyzer         # Rust LSP
-    rustc
-    cargo
-    clippy                # checkOnSave 用
-    ripgrep
-    gcc                  # nvim-treesitter(main) がパーサをソースからビルドするのに必要な cc
-    tree-sitter          # nvim-treesitter(main) は tree-sitter build で各パーサをビルドする
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -108,14 +61,6 @@
      # }
     # ];
   };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-
-
-
 
   i18n.inputMethod = {
     enable = true;
@@ -149,9 +94,6 @@
   #  );
   #};
 
-
-
-
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
       autoconnect = ["qemu:///system"];
@@ -169,77 +111,12 @@
     ];
   };
 
-
-  programs.git = {
-    enable = true;
-    settings= {
-      user = {
-        name = "ekkekuru2";
-        email = "ekke@ekke.jp";
-      };
-      init = {defaultBranch = "main";};
-      commit = {gpgsign = "true";};
-      user = {signingKey = "BED215D4423E036A";};
-    };
-  };
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    plugins = with pkgs.vimPlugins; [
-    	lazy-nvim
-    ];
-  };
-
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  # base.nix の home.file とキーが被らない分だけ追加。
+  # ".config/zsh" / ".config/nvim" は base.nix 側にすでに定義されている。
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-    ".config/zsh" = {
-      source = ../../home/.config/zsh;
-      recursive = true;
-    };
-    ".config/nvim" = {
-      source = ../../home/.config/nvim;
-      recursive = true;
-    };
     ".WolframEngine" = {
       source = ../../home/.WolframEngine;
       recursive = true;
     };
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
   };
-
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/ekkekuru2/etc/profile.d/hm-session-vars.sh
-  #
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }
-

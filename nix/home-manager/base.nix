@@ -77,12 +77,6 @@ in
     tree-sitter          # nvim-treesitter(main) は tree-sitter build で各パーサをビルドする
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      
-    ];
-
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;

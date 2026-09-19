@@ -40,6 +40,7 @@ return {
       -- 使用言語
       "c", "cpp",
       "python",
+      "rust",
       "typescript", "tsx", "javascript",
       "nix",
       "prisma",

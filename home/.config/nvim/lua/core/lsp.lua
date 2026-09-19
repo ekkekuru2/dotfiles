@@ -111,6 +111,22 @@ vim.lsp.config("prismals", {
 })
 vim.lsp.enable("prismals")
 
+-- Rust
+-- Install: nix: pkgs.rust-analyzer (+ pkgs.rustc, pkgs.cargo)  /  rustup component add rust-analyzer
+vim.lsp.config("rust_analyzer", {
+  cmd = { "rust-analyzer" },
+  filetypes = { "rust" },
+  root_markers = { "Cargo.toml", ".git" },
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = { allFeatures = true },
+      checkOnSave = true,
+      check = { command = "clippy" },
+    },
+  },
+})
+vim.lsp.enable("rust_analyzer")
+
 -- Lua (for editing Neovim config)
 -- Install: nix: pkgs.lua-language-server  /  brew: lua-language-server
 vim.lsp.config("lua_ls", {

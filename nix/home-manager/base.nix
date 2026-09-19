@@ -68,6 +68,10 @@ in
     nil                  # Nix LSP
     lua-language-server
     prisma-language-server  # Prisma LSP (prismals)
+    rust-analyzer         # Rust LSP
+    rustc
+    cargo
+    clippy                # checkOnSave 用
     ripgrep
     gcc                  # nvim-treesitter(main) がパーサをソースからビルドするのに必要な cc
     tree-sitter          # nvim-treesitter(main) は tree-sitter build で各パーサをビルドする

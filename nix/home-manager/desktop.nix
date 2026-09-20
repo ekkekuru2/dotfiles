@@ -40,11 +40,26 @@
     kdePackages.kdenlive
     friture
     virt-viewer
+    # NixOS の environment.systemPackages から移設(ただのユーザーアプリのため)
+    kitty
+    slack
+    discord
+    chromium
+    python3
+    vlc
+    freerdp
+    openconnect
+    wireguard-tools
+    firefox
   ];
+
+  # pinentry はGUIが使えるデスクトップなので gnome3 に上書き(base.nix は pinentry-curses)
+  services.gpg-agent.pinentry.package = lib.mkForce pkgs.pinentry-gnome3;
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "wolfram-engine" "vscode" "obsidian" "zoom" "spotify" "davinci-resolve" "ltspice" "reaper" "WolframEngine_14.1.0_LIN.sh"
+      "slack" "discord" "discord-unwrapped"
     ];
 
   programs.vscode = {

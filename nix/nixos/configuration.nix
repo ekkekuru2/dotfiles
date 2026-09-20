@@ -25,12 +25,6 @@
 
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes"];
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "slack"
-    "discord"
-    "discord-unwrapped"
-  ];
-
   # 20260724 mutter 50.2 は Wayland のカーソル/入力フォーカス処理
   # (update_cursor_location -> clutter_input_focus_is_focused) で SIGSEGV する。
   # Wayland ではコンポジタが死ぬと配下の全ウィンドウが道連れになるため、
@@ -175,10 +169,7 @@
 
 
 
-  # Install firefox.
-  programs.firefox = {
-    enable = true;
-  };
+  # firefox は home-manager (home.packages) で管理する
 
   #One Drive
   services.onedrive.enable = true;
@@ -188,32 +179,15 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-    vim
-    git
-    gnupg
-    kitty
-    slack
-    discord
-    chromium
-    python3
+    vim # configuration.nix 編集用のレスキューエディタとして残す
     ## Virtual TPM
     swtpm
-
-    freerdp
-
-    wireguard-tools
-    vlc
-    openconnect
   ];
+  # git/gnupg/kitty/slack/discord/chromium/python3/freerdp/wireguard-tools/vlc/openconnect
+  # は home-manager (home.packages, desktop.nix) で管理する
 
   services.pcscd.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    # pinentryPackage = pkgs.pinentry-curses;
-    pinentryPackage = pkgs.pinentry-gnome3; # enableExtraSocketがpinetry-cursesだと上手く動かなかったがgnomeにしたら上手くいった
-    enableSSHSupport = true;
-    enableExtraSocket = true;
-  };
+  # gpg-agent (pinentry / SSH support) は home-manager (services.gpg-agent) で管理する
 
   programs.nix-ld.enable = true;
 

@@ -56,6 +56,7 @@ in
     fzf
     zoxide
     jq
+    gnupg
     # Network Tools
     whois
     traceroute
@@ -80,6 +81,15 @@ in
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  # GPG agent (SSH support込み)。NixOS非依存にするため home-manager 側で管理する。
+  # pinentry はヘッドレス環境でも動くよう curses をデフォルトにし、
+  # デスクトップ環境では desktop.nix 側で pinentry-gnome3 に mkForce する。
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    pinentry.package = pkgs.pinentry-curses;
   };
 
   programs.git = {

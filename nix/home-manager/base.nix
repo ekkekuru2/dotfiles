@@ -83,12 +83,21 @@ in
     nix-direnv.enable = true;
   };
 
-  # GPG agent (SSH support込み)。NixOS非依存にするため home-manager 側で管理する。
+  # GPG agent。NixOS非依存にするため home-manager 側で管理する。
   # pinentry はヘッドレス環境でも動くよう curses をデフォルトにし、
   # デスクトップ環境では desktop.nix 側で pinentry-gnome3 に mkForce する。
+  #
+  # enableSshSupport は意図的に false。実際に使っているSSH鍵(~/.ssh/id_ed25519)は
+  # GPGの認証用サブキーではない普通の鍵で、GNOMEの gcr-ssh-agent が管理している。
+  # gpg-agentのSSH機能を有効にすると SSH_AUTH_SOCK を gcr-ssh-agent と奪い合い、
+  # 鍵を1つも持たない gpg-agent 側が勝つと ssh 認証が壊れる。
+  #
+  # enableExtraSocket は true。ssh config の RemoteForward で
+  # S.gpg-agent.extra をリモートに転送して署名するのに使っている。
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
+    enableSshSupport = false;
+    enableExtraSocket = true;
     pinentry.package = pkgs.pinentry-curses;
   };
 

@@ -1,7 +1,10 @@
-{ config, pkgs, lib, sources, ... }:
+{ config, pkgs, lib, sources,inputs, ... }:
 
 {
-  imports = [ ./base.nix ];
+  imports = [
+    ./base.nix
+    inputs.nix-hazkey.homeModules.hazkey
+  ];
 
   # username / homeDirectory は base.nix の $USER/$HOME 動的解決に任せる
   # (デスクトップも常に ekkekuru2 で --impure 実行するので同じ結果になる)
@@ -77,6 +80,7 @@
     # ];
   };
 
+  services.hazkey.enable=true;
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";

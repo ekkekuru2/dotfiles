@@ -13,6 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xremap-flake.url = "github:xremap/nix-flake";
+    nix-hazkey = {
+      url = "github:aster-void/nix-hazkey";
+      inputs.nixpkgs.follows = "nixpkgs"; # nixpkgs の重複を排除する
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, winapps, ... }@ inputs:

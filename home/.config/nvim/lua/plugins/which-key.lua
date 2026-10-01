@@ -25,6 +25,7 @@ return {
       { "<leader>f", group = "find" },
       { "<leader>g", group = "git" },
       { "<leader>l", group = "lsp" },
+      { "<leader>m", group = "markdown" },
       { "<leader>x", group = "diagnostics" },
     })
   end,

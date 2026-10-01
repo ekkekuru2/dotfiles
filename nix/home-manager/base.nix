@@ -76,6 +76,7 @@ in
     ripgrep
     gcc                  # nvim-treesitter(main) がパーサをソースからビルドするのに必要な cc
     tree-sitter          # nvim-treesitter(main) は tree-sitter build で各パーサをビルドする
+    nodejs               # markdown-preview.nvim のビルド(npm install)に必要
   ];
 
   programs.direnv = {

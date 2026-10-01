@@ -38,6 +38,46 @@
     plugins = with pkgs; [
       networkmanager-openconnect
     ];
+
+    # UTokyo VPN (Cisco AnyConnect 互換 / openconnect)
+    # connection.permissions は必ず空のままにする。NetworkManager 1.58 は
+    # permissions 付き (= private) プロファイルを起動する際にプラグイン側の
+    # supports-safe-private-file-access を要求するが、NetworkManager-openconnect
+    # 1.2.10 はまだこのキーを .name ファイルに持たないため、private にすると
+    # "The 'openconnect' plugin doesn't support private connections." で弾かれる。
+    # パスワードは *-flags = 2 (not-saved) により毎回 GUI から聞かれるので、
+    # このプロファイルに秘密情報は含まれない。
+    ensureProfiles.profiles."UTokyo VPN" = {
+      connection = {
+        id = "UTokyo VPN";
+        uuid = "cca1bea2-f6cf-4479-8701-bd6188917d30";
+        type = "vpn";
+        autoconnect = false;
+        permissions = "";
+      };
+      vpn = {
+        service-type = "org.freedesktop.NetworkManager.openconnect";
+        protocol = "anyconnect";
+        gateway = "vpn1.adm.u-tokyo.ac.jp";
+        authtype = "password";
+        useragent = "AnyConnect";
+        gateway-flags = "2";
+        cookie-flags = "2";
+        gwcert-flags = "2";
+        resolve-flags = "2";
+        certsigs-flags = "0";
+        lasthost-flags = "0";
+        xmlconfig-flags = "0";
+        autoconnect-flags = "0";
+        disable_udp = "no";
+        enable_csd_trojan = "no";
+        pem_passphrase_fsid = "no";
+        prevent_invalid_cert = "no";
+        stoken_source = "disabled";
+      };
+      ipv4.method = "auto";
+      ipv6.method = "auto";
+    };
   };
 
   # Set your time zone.
@@ -120,6 +160,17 @@
     ];
     shell = pkgs.zsh;
   };
+  # NixOS の networkmanager モジュールは nm-openvpn / nm-iodine しかユーザーを
+  # 作らないので、openconnect プラグインが前提にしている nm-openconnect を自分で
+  # 定義する。無いと dbus-broker が nm-openconnect-service.conf の
+  # <policy user="nm-openconnect"> を "Invalid user-name" として捨て、
+  # nm-openconnect-service が openconnect の特権を落とせず csd-wrapper を呼べない。
+  users.groups.nm-openconnect = { };
+  users.users.nm-openconnect = {
+    isSystemUser = true;
+    group = "nm-openconnect";
+  };
+
   programs.zsh.enable = true;
   environment.sessionVariables = {
     ZDOTDIR = "$HOME/.config/zsh";

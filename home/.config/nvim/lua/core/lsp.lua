@@ -1,11 +1,25 @@
 -- Diagnostic display
+-- 行内にエラー文を出さない (virtual_text = false)。位置は sign 列と下線だけで示し、
+-- 中身はカーソルをその箇所に止めたとき (CursorHold) か <leader>ld でフロート表示する。
 vim.diagnostic.config({
-  virtual_text = { prefix = "●" },
+  virtual_text = false,
   signs = true,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
   float = { border = "rounded", source = true },
+})
+
+-- カーソルを updatetime (250ms) 止めたら、その位置の診断をフロートで出す。
+-- scope = "cursor" なので、下線が引かれている箇所に実際に乗せたときだけ出る。
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    -- フロートウィンドウの中にいるときは重ねて出さない
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+      return
+    end
+    vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+  end,
 })
 
 -- LSP keymaps (set on attach, buffer-local)
@@ -15,9 +29,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local buf = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-    -- Inlay hints (型推論結果をインラインで表示)
+    -- Inlay hints (仮引数名・推論された型のインライン表示)
+    -- バッファの実際の内容以外を常時表示したくないのでデフォルト off。
+    -- 型や引数名は K (vim.lsp.buf.hover) / <leader>lh (signature help) で見る。
+    -- 必要なときだけ <leader>li で出す。
     if client and client:supports_method("textDocument/inlayHint") then
-      vim.lsp.inlay_hint.enable(true, { bufnr = buf })
       map("n", "<leader>li", function()
         vim.lsp.inlay_hint.enable(
           not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }),
@@ -39,6 +55,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "<leader>lr", vim.lsp.buf.rename,                                   { buffer = buf, desc = "Rename" })
     map("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end,  { buffer = buf, desc = "Format" })
     map("n", "<leader>lh", vim.lsp.buf.signature_help,                           { buffer = buf, desc = "Signature help" })
+    map("n", "<leader>ld", function() vim.diagnostic.open_float() end,           { buffer = buf, desc = "Line diagnostics" })
     map("n", "<leader>ls", vim.lsp.buf.document_symbol,                          { buffer = buf, desc = "Document symbols" })
     map("n", "<leader>lS", vim.lsp.buf.workspace_symbol,                         { buffer = buf, desc = "Workspace symbols" })
   end,

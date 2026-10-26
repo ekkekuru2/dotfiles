@@ -171,10 +171,17 @@
     group = "nm-openconnect";
   };
 
-  programs.zsh.enable = true;
-  environment.sessionVariables = {
-    ZDOTDIR = "$HOME/.config/zsh";
+  # zsh 本体は OS 側で有効にしておく (users.users.*.shell = pkgs.zsh と
+  # /etc/shells のため)。ただし補完初期化は home-manager に任せる:
+  # /etc/zshrc の `autoload -U compinit && compinit` は ~/.zshrc より前に走るので
+  # home-manager が fpath に足すプラグインの補完を拾えず、かつ二重 compinit になる。
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
   };
+
+  # ZDOTDIR は programs.zsh.dotDir を設定した home-manager が ~/.zshenv に
+  # 書くので、OS 側で export する必要はない。
 
 
   # Virtualisation

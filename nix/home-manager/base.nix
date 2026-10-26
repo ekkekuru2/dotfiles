@@ -53,9 +53,13 @@ in
     # '')
     unzip
     p7zip
-    fzf
-    zoxide
     jq
+    # fzf / zoxide は programs.fzf / programs.zoxide が入れるのでここには書かない。
+    # zsh-completions は source するプラグインではなく補完関数の束なので、
+    # home.packages 経由で profile に入れる。生成 .zshrc の mkOrder 520 が
+    # $NIX_PROFILES/*/share/zsh/site-functions を fpath に足すため、
+    # 570 の compinit に間に合う。
+    zsh-completions
     gnupg
     # Network Tools
     whois
@@ -79,8 +83,97 @@ in
     nodejs               # markdown-preview.nvim のビルド(npm install)に必要
   ];
 
+  # 以前は home/.config/zsh/.zshrc を home.file でそのまま配置し、プラグインは
+  # zinit が実行時に git clone していた。シェルの起動がネットワークと
+  # バージョン未固定の clone に依存するのをやめ、宣言的プラグインに移した。
+  #
+  # 生成される .zshrc の挿入順序 (home-manager の mkOrder)、把握しておくと
+  # initContent をどこに置くか決めやすい:
+  #   500 mkBefore             570 compinit          900 plugins を source
+  #   510 fpath 整理           700 autosuggestions   910 fzf
+  #   520 NIX_PROFILES → fpath 851 zoxide           1000 既定
+  #   560 plugins → fpath                           1200 syntax-highlighting
+  programs.zsh = {
+    enable = true;
+
+    # xdg.enable = false のため dotDir の既定は $HOME になってしまう。
+    # 既存の ~/.config/zsh を使い続けるので明示する。
+    # これを設定すると home-manager が ~/.zshenv に ZDOTDIR の export を
+    # 書くので、NixOS 側の environment.sessionVariables.ZDOTDIR は不要になる。
+    dotDir = "${config.xdg.configHome}/zsh";
+
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    # history.path の既定は ${dotDir}/.zsh_history で既存の履歴ファイルと同じ。
+    # size/save だけ従来の .zshrc と同じ値に上げる (既定は 10000)。
+    history = {
+      size = 1000000;
+      save = 1000000;
+    };
+
+    shellAliases = {
+      l = "ls -al --color=always";
+      claude-dub = "CLAUDE_CONFIG_DIR=~/.config/claude-dubguild claude";
+    };
+
+    # zinit light で引いていたものの置き換え。syntax-highlighting と
+    # autosuggestions は専用オプション側で面倒を見るのでここには書かない。
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "fzf-tab";
+        src = pkgs.zsh-fzf-tab;
+        file = "share/fzf-tab/fzf-tab.plugin.zsh";
+      }
+    ];
+
+    initContent = lib.mkMerge [
+      # instant prompt は端末出力を伴う処理より前に居ないと意味がないので最初期に置く。
+      (lib.mkBefore ''
+        # Enable Powerlevel10k instant prompt. Should stay close to the top of .zshrc.
+        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+        fi
+      '')
+
+      # 既定の 1000。テーマ本体の source (900) より後なので .p10k.zsh で上書きできる。
+      ''
+        # To customize prompt, run `p10k configure` or edit .p10k.zsh.
+        [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
+
+        # Ctrl + 矢印キーで単語ごとに移動
+        bindkey ";5C" forward-word
+        bindkey ";5D" backward-word
+      ''
+    ];
+  };
+
+  # zinit light Aloxaf/fzf-tab の相棒。従来は fzf 同梱の key-bindings.zsh /
+  # completion.zsh を手でコピーした 650 行の fzf.zsh を source していたが、
+  # `fzf --zsh` を source する方式に変えて本体との乖離をなくす。
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  # .zshrc の eval "$(zoxide init zsh)" の置き換え。
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  # programs.zsh を使うようになったので、この module の zsh 統合が実際に効く。
+  # (以前は .zshrc が home-manager 管理外だったため eval "$(direnv hook zsh)" を
+  #  .zshrc に手書きする必要があった)
   programs.direnv = {
     enable = true;
+    enableZshIntegration = true;
     nix-direnv.enable = true;
   };
 
@@ -131,10 +224,11 @@ in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-    ".config/zsh" = {
-      source = ../../home/.config/zsh;
-      recursive = true;
-    };
+    # .zshrc / .zshenv は programs.zsh が ${dotDir} 以下に生成するので、
+    # ディレクトリ丸ごとの配置はやめる (キーが衝突する)。
+    # .p10k.zsh は `p10k configure` が吐く 1500 行超の生成物で、Nix で
+    # 表現する意味がないため素のファイルのまま置く。
+    ".config/zsh/.p10k.zsh".source = ../../home/.config/zsh/.p10k.zsh;
     ".config/nvim" = {
       source = ../../home/.config/nvim;
       recursive = true;

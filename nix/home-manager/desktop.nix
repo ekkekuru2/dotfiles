@@ -131,7 +131,7 @@
   };
 
   # base.nix の home.file とキーが被らない分だけ追加。
-  # ".config/zsh" / ".config/nvim" は base.nix 側にすでに定義されている。
+  # ".config/zsh/.p10k.zsh" / ".config/nvim" は base.nix 側にすでに定義されている。
   home.file = {
     ".WolframEngine" = {
       source = ../../home/.WolframEngine;

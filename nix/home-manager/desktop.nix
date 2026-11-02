@@ -89,6 +89,7 @@
       addons = [
         pkgs.fcitx5-skk
         pkgs.fcitx5-gtk
+        pkgs.fcitx5-mozc
       ];
     };
   };
